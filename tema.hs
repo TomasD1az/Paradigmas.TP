@@ -24,4 +24,3 @@ agregarT etiqueta (Tem nombre etiquetas datos) = Tem nombre new_etiquetas datos
 aplicaT :: Etiqueta -> Tema -> Bool
 aplicaT etiqueta (Tem nombre etiquetas datos) = foldl (\fold each-> (||) (each == etiqueta) fold) False etiquetas
 ---(each == etiqueta) || fold
-
