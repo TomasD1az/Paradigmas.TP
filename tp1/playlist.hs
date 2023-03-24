@@ -18,4 +18,3 @@ backP (Play i temas) = Play (i - 1) temas -- hacer test
 
 resetP :: Playlist -> Playlist
 resetP (Play _ temas) = nuevaP temas -- hacer test
-

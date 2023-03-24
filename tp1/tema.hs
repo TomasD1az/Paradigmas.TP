@@ -31,6 +31,3 @@ aplicaT etiqueta (Tem nombre etiquetas datos) = foldl (\fold each-> (||) (each =
 test = [nuevoT "test" "test.mp4" == Tem "test" [] "test.mp4", nombreT (Tem "test" [] "test.mp4") == "test", datosT (Tem "test" [] "test.mp4") == "test.mp4",
         etiquetasT (Tem "test" ["test123"] "test.mp4") == ["test123"], agregarT "test123" (Tem "test" [] "test.mp4") == Tem "test" ["test123"] "test.mp4", 
         aplicaT "test123" (Tem "test" ["test123"] "test.mp4")]
-
-
-
