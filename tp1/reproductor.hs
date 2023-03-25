@@ -1,4 +1,4 @@
-module Reproductor ( Reproductor, nuevoR, archivosR, listaParaR, playR, temasR)
+module Reproductor ( Reproductor (RP), nuevoR, archivosR, listaParaR, playR, temasR, actualR, avanzarR, retrocederR, reiniciarR)
 where
 
 import Tipos

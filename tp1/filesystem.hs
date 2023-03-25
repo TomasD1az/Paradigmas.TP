@@ -1,4 +1,4 @@
-module FileSystem  ( FileSystem, nuevoF, etiquetasF, temasF, agregarF, filtrarF )
+module FileSystem  ( FileSystem (FS), nuevoF, etiquetasF, temasF, agregarF, filtrarF )
 where
 
 import Tipos
