@@ -8,7 +8,7 @@ import FileSystem
 
 data Reproductor = RP FileSystem Playlist deriving (Eq)
 instance Show Reproductor
-     where show (RP filesystem playlist) = "Reproductor\n" ++ "| Filesystem: " ++ show filesystem ++ "\n| playlist:\n" ++ show playlist
+     where show (RP filesystem playlist) = "Reproductor\n" ++ "| Filesystem: " ++ show filesystem ++ "\n| Playlist:\n" ++ show playlist
 
 nuevoR :: FileSystem -> Reproductor
 nuevoR filesys = RP filesys (nuevaP [])
@@ -23,10 +23,17 @@ temasR :: Reproductor -> [Tema]
 temasR (RP filesys playlist) = temasF filesys
 
 playR :: Reproductor -> Etiqueta -> Reproductor
-playR (RP filesys _) etiqueta = RP filesys playlist
-    where playlist = nuevaP (filtrarF (RP filesys _) etiqueta)
+playR reproductor etiqueta = RP (archivosR reproductor) playlist
+    where playlist = nuevaP (listaParaR etiqueta reproductor)
 
---actualR :: Reproductor -> Tema
--- avanzarR :: Reproductor -> Reproductor
--- retrocederR :: Reproductor -> Reproductor
--- reiniciarR :: Reproductor -> Reproductor
+actualR :: Reproductor -> Tema
+actualR (RP filesys playlist) = actualP playlist
+
+avanzarR :: Reproductor -> Reproductor
+avanzarR (RP filesys playlist) = RP filesys (skipP playlist)
+
+retrocederR :: Reproductor -> Reproductor
+retrocederR (RP filesys playlist) = RP filesys (backP playlist)
+
+reiniciarR :: Reproductor -> Reproductor
+reiniciarR (RP filesys playlist) = RP filesys (resetP playlist)
