@@ -26,8 +26,3 @@ agregarT etiqueta (Tem nombre etiquetas datos) = Tem nombre new_etiquetas datos
 
 aplicaT :: Etiqueta -> Tema -> Bool
 aplicaT etiqueta (Tem nombre etiquetas datos) = foldl (\fold each-> (||) (each == etiqueta) fold) False etiquetas
-
-
-test = [nuevoT "test" "test.mp4" == Tem "test" [] "test.mp4", nombreT (Tem "test" [] "test.mp4") == "test", datosT (Tem "test" [] "test.mp4") == "test.mp4",
-        etiquetasT (Tem "test" ["test123"] "test.mp4") == ["test123"], agregarT "test123" (Tem "test" [] "test.mp4") == Tem "test" ["test123"] "test.mp4", 
-        aplicaT "test123" (Tem "test" ["test123"] "test.mp4")]

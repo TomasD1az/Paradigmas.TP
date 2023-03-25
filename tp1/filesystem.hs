@@ -25,11 +25,3 @@ agregarF tema (FS etiquetas temas) = FS (etiquetas ++ etiquetasT tema) (tema : t
 
 filtrarF :: Etiqueta -> FileSystem -> [ Tema ]
 filtrarF etiqueta (FS etiquetas temas) = foldr (\each fold-> if etiqueta `elem` etiquetasT each then each:fold else fold) [] temas
-
-tema1 = nuevoT "cancion1" "caca1"
-temazo = agregarT "Rock" tema1
-
-tema2 = nuevoT "cancion2" "caca2"
-temazono = agregarT "Rock" tema2
-
-filesys1 = FS [] [temazo, temazono]
