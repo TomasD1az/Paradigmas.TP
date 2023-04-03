@@ -1,0 +1,33 @@
+package stack;
+
+import java.util.ArrayList;
+
+public class OOStack {
+	static public String stackEmptyErrorDescription = "Stack is empty";
+	private ArrayList container = new ArrayList();
+
+	public OOStack() {
+		container = new ArrayList();
+	}
+	public boolean isEmpty() {
+		return strings.isEmpty();
+	}
+
+	public OOStack push(String string) {
+		strings.add( string );
+		return this;
+	}
+
+	public Object pop() {
+		return strings.remove( strings.size() - 1 );
+	}
+
+	public Object top() {
+		return strings.get( strings.size() - 1 );
+	}
+
+	public int size() {
+		return strings.size();
+	}
+
+}
