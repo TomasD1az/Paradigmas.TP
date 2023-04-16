@@ -1,34 +1,35 @@
 package stack;
 
+
 public class OOStack {
 	static public String stackEmptyErrorDescription = "Stack is empty";
-	private SuperList list;
+	private SuperContainer container;
 	
 	public OOStack() {
-		list = new EmptyList();
+		container = new EmptyContainer();
 	}
 
 	public boolean isEmpty() {
-		return list.isEmpty();
+		return container.isEmpty();
 	}
 
 	public OOStack push(Object object) {
-		list = list.push( object );
+		container = container.push( object );
 		return this;
 	}
 
 	public Object pop() {
-		Object removedObject = list.top();
-		list = list.pop();
+		Object removedObject = container.top();
+		container = container.pop();
 		return removedObject;
 	}
 
 	public Object top() {
-		return list.top();
+		return container.top();
 	}
 
 	public int size() {
-		return list.size();
+		return container.size();
 	}
 
 }

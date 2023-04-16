@@ -1,9 +1,0 @@
-package stack;
-
-public class EmptyList extends SuperList {
-
-	public SuperList push() {
-		return new ListWithItems() ;
-	}
-
-}
