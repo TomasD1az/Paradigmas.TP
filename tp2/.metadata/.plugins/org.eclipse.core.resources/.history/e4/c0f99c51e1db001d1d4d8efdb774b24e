@@ -1,0 +1,13 @@
+package stack;
+
+public class EmptyList extends SuperList {
+
+	public SuperList push( Object object) {
+		return new ListWithItems( object ) ;
+	}
+	
+	public SuperList pop() {
+		return OOStack.stackEmptyErrorDescription;
+	}
+
+}

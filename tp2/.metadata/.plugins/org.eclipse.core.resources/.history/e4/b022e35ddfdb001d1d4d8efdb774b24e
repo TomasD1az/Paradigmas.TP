@@ -1,0 +1,11 @@
+package stack;
+
+public class ListWithItems extends SuperList {
+
+	@Override
+	public Object push( Object Object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

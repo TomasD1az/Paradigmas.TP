@@ -1,0 +1,18 @@
+package stack;
+
+import java.util.ArrayList;
+
+	public abstract class SuperList {
+		
+		static public SuperList ListWith(ArrayList<Object> array) {
+			SuperList returnList = new EmptyList();
+			array.stream().forEach((each) -> returnList.push( each ) );
+			return returnList;
+	}
+		
+		public abstract boolean isEmpty();
+		public abstract SuperList push( Object object);
+		public abstract SuperList pop();
+		public abstract Object top();
+		public abstract Integer size();
+}

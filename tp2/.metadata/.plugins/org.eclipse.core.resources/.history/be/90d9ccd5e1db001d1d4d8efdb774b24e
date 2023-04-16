@@ -1,0 +1,21 @@
+package stack;
+
+public class EmptyList extends SuperList {
+
+	public SuperList push( Object object) {
+		return new ListWithItems( object ) ;
+	}
+	
+	public boolean isEmpty() {
+		return true;
+	}
+	
+	public SuperList pop() {
+		throw new Error( OOStack.stackEmptyErrorDescription);
+	}
+	
+	public Object top() {
+		throw new Error( OOStack.stackEmptyErrorDescription)
+	}
+
+}

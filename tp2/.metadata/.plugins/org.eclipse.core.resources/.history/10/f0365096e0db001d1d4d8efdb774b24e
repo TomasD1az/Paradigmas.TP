@@ -1,0 +1,17 @@
+package stack;
+
+import java.util.ArrayList;
+
+public class ListWithItems extends SuperList {
+	public ArrayList<Object> array;
+	
+	public ListWithItems( Object object) {
+		array = new ArrayList<Object>();
+		array.add( object );
+	}
+	
+	public Object push( Object object) {
+		return SuperList.ListWith(array.add(object));
+	}
+
+}
