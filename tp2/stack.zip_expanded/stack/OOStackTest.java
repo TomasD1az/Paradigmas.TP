@@ -2,90 +2,77 @@ package stack;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class OOStackTest {
 
-  @Test public void test01StackShouldBeEmptyWhenCreated() {
+  public static String TESTSTRING1 = "String1";
+  public static String TESTSTRING2 = "String2";
+
+@Test public void test01StackShouldBeEmptyWhenCreated() {
     assertTrue( new OOStack().isEmpty() );
   }
 
   @Test public void test02PushAddElementsToTheStack() {
-    assertFalse( new OOStack().push( "Something" ).isEmpty() );
+    assertFalse( stackWithString().isEmpty() );
   }
 
   @Test public void test03PopRemovesElementsFromTheStack() {
-    OOStack stack = new OOStack();
-    stack.push( "Something" );
-    stack.pop();
-    assertTrue( stack.isEmpty() );
+    assertTrue( stackWithPoppedString().isEmpty() );
   }
 
   @Test public void test04PopReturnsLastPushedObject() {
-    OOStack stack = new OOStack();
-    String pushedObject = "Something";
-    stack.push( pushedObject );
-    assertEquals( stack.pop(), pushedObject );
+    assertEquals( stackWithString().pop(), TESTSTRING1 );
   }
 
   @Test public void test05StackBehavesLIFO() {
-    OOStack stack = new OOStack();
-    String firstPushedObject = "First";
-    String secondPushedObject = "Second";
+    OOStack stack = stackWithString().push( TESTSTRING2 );
 
-    stack.push( firstPushedObject );
-    stack.push( secondPushedObject );
-
-    assertEquals( stack.pop(), secondPushedObject );
-    assertEquals( stack.pop(), firstPushedObject );
+    assertEquals( stack.pop(), TESTSTRING2 );
+    assertEquals( stack.pop(), TESTSTRING1 );
     assertTrue( stack.isEmpty() );
   }
 
   @Test public void test06TopReturnsLastPushedObject() {
-    String pushedObject = "Something";
-    assertEquals( new OOStack().push( pushedObject ).top(), 
-                  pushedObject );
+    assertEquals( new OOStack().push( TESTSTRING1 ).top(), 
+    		TESTSTRING1 );
   }
 
   @Test public void test07TopDoesNotRemoveObjectFromStack() {
-    OOStack stack = new OOStack();
-    stack.push( "Something" );
+    OOStack stack = stackWithString();
     assertEquals( stack.size(), 1 );
     stack.top();
     assertEquals( stack.size(), 1 );
   }
 
   @Test public void test08CanNotPopWhenThereAreNoObjectsInTheStack() {
-    OOStack stack = new OOStack();
-    try {
-      stack.pop();
-      fail( "Expected MessageNotUnderstood Error was not thrown." );
-    } catch (Error e) {
-      assertTrue( e.getMessage().equals( OOStack.stackEmptyErrorDescription ) );
-    }
+	throwsLike(OOStack.stackEmptyErrorDescription, () -> new OOStack().pop() );
   }
 
   @Test public void test09CanNotPopWhenThereAreNoObjectsInTheStackAndTheStackHadObjects() {
-    OOStack stack = new OOStack();
-    stack.push( "Something" );
-    stack.pop();
-    try {
-      stack.pop();
-      fail( "Expected MessageNotUnderstood Error was not thrown." );
-    } catch (Error e) {
-      assertTrue( e.getMessage().equals( OOStack.stackEmptyErrorDescription ) );
-    }
+    throwsLike( OOStack.stackEmptyErrorDescription, () -> stackWithPoppedString().pop() );
   }
 
   @Test public void test10CanNotTopWhenThereAreNoObjectsInTheStack() {
-    OOStack stack = new OOStack();
-    try {
-      stack.top();
-      fail( "Expected MessageNotUnderstood Error was not thrown." );
-    } catch (Error e) {
-      assertTrue( e.getMessage().equals( OOStack.stackEmptyErrorDescription ) );
-    }
+    throwsLike(OOStack.stackEmptyErrorDescription, () -> new OOStack().top() );
   }
+  
+  public void throwsLike(String msg, Executable executable) {
+		assertEquals( msg, assertThrows( Error.class, executable ).getMessage() );
+	}
+  
+  private OOStack stackWithString() {
+		OOStack stack = new OOStack();
+	    stack.push( TESTSTRING1 );
+		return stack;
+	}
+  
+  private OOStack stackWithPoppedString() {
+		OOStack stack = stackWithString();
+	    stack.pop();
+		return stack;
+	}
 }

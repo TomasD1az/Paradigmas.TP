@@ -7,7 +7,7 @@ public class EmptyContainer extends SuperContainer {
 	}
 
 	public SuperContainer push(Object object) {
-		return new ContainerWithItems( object );
+		return new ContainerWithItem( this, object );
 	}
 
 	public SuperContainer pop() {
