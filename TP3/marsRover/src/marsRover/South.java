@@ -10,11 +10,11 @@ public class South extends Direction {
 		return new Pointer (0,1);
 	}
 
-	public Direction moveLeft() {
+	public Direction rotateLeft() {
 		return new East();	
 	}
 
-	public Direction moveRight() {
+	public Direction rotateRight() {
 		return new West();
 	}
 }

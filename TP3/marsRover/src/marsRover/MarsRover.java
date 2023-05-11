@@ -11,17 +11,27 @@ public class MarsRover {
 	}
 	
 	public MarsRover move(String command) {
-		for (int i = 0; i < command.length(); i++) {
-			if (command.charAt( i ) == "f".charAt(0)) {
-				return moveForward();
-			}
-			throw new RuntimeException("Comando no valido");
-		}
+		new Command( command ).apply( this );
 		return this;
 	}
 
-	private MarsRover moveForward() {
-		position = position.add( direction.moveForward());
+	public MarsRover moveForward() {
+		position = position.add( direction.moveForward() );
+		return this;
+	}
+	
+	public MarsRover moveBackward() {
+		position = position.add( direction.moveBackward() );
+		return this;
+	}
+	
+	public MarsRover rotateRight() {
+		direction = direction.rotateRight();
+		return this;
+	}
+	
+	public MarsRover rotateLeft() {
+		direction = direction.rotateLeft();
 		return this;
 	}
 
