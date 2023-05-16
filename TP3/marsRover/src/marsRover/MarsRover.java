@@ -34,6 +34,10 @@ public class MarsRover {
 		direction = direction.rotateLeft();
 		return this;
 	}
+	
+	public MarsRover stayPut() {
+		return this;
+	}
 
 	public Pointer location() { return position; }	
 	public Direction direction() { return direction; }
