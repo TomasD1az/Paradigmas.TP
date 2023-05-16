@@ -51,7 +51,6 @@ class MarsRoverTest {
 	
 	@Test public void test09() {
 		MarsRover rover = new MarsRover( new Pointer(0,0) , new North() );
-		rover.move("a");
-		assertEquals( new Pointer(0, 0) , rover.location());
+		assertEquals( "No command found with given character" , assertThrows( Exception.class, () -> rover.move("a")).getMessage());
 	}
 }
