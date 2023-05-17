@@ -2,6 +2,7 @@ package marsRover;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class MarsRover {
 	
@@ -41,18 +42,14 @@ public class MarsRover {
 	}
 	
 	public Command lookForCommand( Character id ) {
-		for (Command command : commandArray()) {
-			if (command.id() == id) 
-				return command;
-		}
-		throw new RuntimeException("No command found with given character");
+		return commandArray().stream().filter( (each) -> each.canHandle(id) ).findAny().orElse(new CommandNull());
 	}
 
 	public Pointer location() { return position; }	
 	public Direction direction() { return direction; }
 	
 	private ArrayList<Command> commandArray() {
-		ArrayList<Command> commands = new ArrayList<Command>(Arrays.asList( new MoveForward(), new MoveBackwards(), new MoveRight(), new MoveLeft()));
+		ArrayList<Command> commands = new ArrayList<Command>(Arrays.asList( new CommandForward(), new CommandBackwards(), new CommandRight(), new CommandLeft()));
 		return commands;
 	}
 }

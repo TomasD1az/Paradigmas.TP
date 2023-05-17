@@ -1,15 +1,17 @@
 package marsRover;
 
-public class MoveForward extends Command{
+public class CommandForward extends Command{
 	private Character id;
 	
-	public MoveForward() {
+	public CommandForward() {
 		id = "f".charAt(0);
 	}
 	
 	public void execute(MarsRover marsrover) {
 		marsrover.moveForward();
 	}
+	
+	public boolean canHandle(char id) {return id() == id;}
 	
 	public Character id() {
 		return id;

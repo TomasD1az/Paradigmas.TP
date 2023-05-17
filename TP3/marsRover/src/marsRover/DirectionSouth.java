@@ -1,6 +1,6 @@
 package marsRover;
 
-public class South extends Direction {
+public class DirectionSouth extends Direction {
 
 	public Pointer moveForward() {
 		return new Pointer (0,-1);
@@ -11,10 +11,10 @@ public class South extends Direction {
 	}
 
 	public Direction rotateLeft() {
-		return new East();	
+		return new DirectionEast();	
 	}
 
 	public Direction rotateRight() {
-		return new West();
+		return new DirectionWest();
 	}
 }
