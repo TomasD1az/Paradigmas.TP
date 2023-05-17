@@ -1,18 +1,16 @@
 package marsRover;
 
 public class MoveLeft extends Command{
-	private Character name;
-	private MarsRover marsrover;
+	private Character id;
 	
-	public MoveLeft( MarsRover theMarsrover ) {
-		name = "l".charAt(0);
-		marsrover = theMarsrover;
+	public MoveLeft() {
+		id = "l".charAt(0);
 	}
-	public void execute() {
+	public void execute(MarsRover marsrover) {
 		marsrover.rotateLeft();
 	}
 	
-	public Character name() {
-		return name;
+	public Character id() {
+		return id;
 	}
 }

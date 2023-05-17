@@ -1,18 +1,17 @@
 package marsRover;
 
 public class MoveBackwards extends Command{
-	private Character name;
-	private MarsRover marsrover;
+	private Character id;
 	
-	public MoveBackwards( MarsRover theMarsrover ) {
-		name = "b".charAt(0);
-		marsrover = theMarsrover;
+	public MoveBackwards() {
+		id = "b".charAt(0);
 	}
-	public void execute() {
+	
+	public void execute(MarsRover marsrover) {
 		marsrover.moveBackward();
 	}
 	
-	public Character name() {
-		return name;
+	public Character id() {
+		return id;
 	}
 }

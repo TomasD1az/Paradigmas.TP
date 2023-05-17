@@ -1,8 +1,9 @@
 package marsRover;
 
 public abstract class Command {
-	public abstract void execute();
-	public abstract Character name();
+	private Character id;
+	public abstract void execute(MarsRover marsrover);
+	public abstract Character id();
 }
 	
 	

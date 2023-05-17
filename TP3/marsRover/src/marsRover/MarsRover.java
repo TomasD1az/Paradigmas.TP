@@ -1,6 +1,7 @@
 package marsRover;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MarsRover {
 	
@@ -14,7 +15,7 @@ public class MarsRover {
 	
 	public MarsRover move(String command) {
 		for (int i = 0; i < command.length(); i++) {
-			lookForCommand( command.charAt(i) ).execute();
+			lookForCommand( command.charAt(i) ).execute( this );
 		}
 		return this;
 	}
@@ -39,9 +40,9 @@ public class MarsRover {
 		return this;
 	}
 	
-	public Command lookForCommand( Character character ) {
+	public Command lookForCommand( Character id ) {
 		for (Command command : commandArray()) {
-			if (command.name() == character) 
+			if (command.id() == id) 
 				return command;
 		}
 		throw new RuntimeException("No command found with given character");
@@ -51,11 +52,7 @@ public class MarsRover {
 	public Direction direction() { return direction; }
 	
 	private ArrayList<Command> commandArray() {
-		ArrayList<Command> commands = new ArrayList<Command>();
-		commands.add(new MoveForward( this ));
-		commands.add(new MoveBackwards( this ));
-		commands.add(new MoveRight( this ));
-		commands.add(new MoveLeft( this ));
+		ArrayList<Command> commands = new ArrayList<Command>(Arrays.asList( new MoveForward(), new MoveBackwards(), new MoveRight(), new MoveLeft()));
 		return commands;
 	}
 }

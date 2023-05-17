@@ -1,18 +1,17 @@
 package marsRover;
 
 public class MoveForward extends Command{
-	private Character name;
-	private MarsRover marsrover;
+	private Character id;
 	
-	public MoveForward( MarsRover theMarsrover ) {
-		name = "f".charAt(0);
-		marsrover = theMarsrover;
+	public MoveForward() {
+		id = "f".charAt(0);
 	}
-	public void execute() {
+	
+	public void execute(MarsRover marsrover) {
 		marsrover.moveForward();
 	}
 	
-	public Character name() {
-		return name;
+	public Character id() {
+		return id;
 	}
 }

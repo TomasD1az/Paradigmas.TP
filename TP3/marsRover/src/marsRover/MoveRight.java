@@ -1,18 +1,16 @@
 package marsRover;
 
 public class MoveRight extends Command{
-	private Character name;
-	private MarsRover marsrover;
+	private Character id;
 	
-	public MoveRight( MarsRover theMarsrover ) {
-		name = "r".charAt(0);
-		marsrover = theMarsrover;
+	public MoveRight() {
+		id = "r".charAt(0);
 	}
-	public void execute() {
+	public void execute(MarsRover marsrover) {
 		marsrover.rotateRight();
 	}
 	
-	public Character name() {
-		return name;
+	public Character id() {
+		return id;
 	}
 }
