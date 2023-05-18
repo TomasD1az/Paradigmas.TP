@@ -1,14 +1,12 @@
 package marsRover;
 
 public class CommandNull extends Command {
-
-	private Character id;
 	
 	public CommandNull() {
 		this.id = null;
 	}
 	public void execute(MarsRover marsrover) {
-		throw new RuntimeException("No command found with given character");
+		throw new RuntimeException(INVALID_COMMAND_ERROR);
 	}
 
 	public boolean canHandle(char id) {

@@ -1,7 +1,6 @@
 package marsRover;
 
 public class CommandLeft extends Command{
-	private Character id;
 	
 	public CommandLeft() {
 		id = "l".charAt(0);

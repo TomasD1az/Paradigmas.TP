@@ -1,7 +1,6 @@
 package marsRover;
 
 public class CommandForward extends Command{
-	private Character id;
 	
 	public CommandForward() {
 		id = "f".charAt(0);

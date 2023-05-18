@@ -1,7 +1,6 @@
 package marsRover;
 
 public class CommandBackwards extends Command{
-	private Character id;
 	
 	public CommandBackwards() {
 		id = "b".charAt(0);

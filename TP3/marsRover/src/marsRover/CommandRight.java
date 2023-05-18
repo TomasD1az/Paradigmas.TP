@@ -1,7 +1,6 @@
 package marsRover;
 
 public class CommandRight extends Command{
-	private Character id;
 	
 	public CommandRight() {
 		id = "r".charAt(0);
