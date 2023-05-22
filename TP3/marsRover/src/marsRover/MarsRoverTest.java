@@ -3,66 +3,65 @@ package marsRover;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 class MarsRoverTest {
 
 	@Test public void test01RoverStartsAtGivenLocation() {
-		assertEquals( new Pointer(0,0), new MarsRover( new Pointer(0, 0), new DirectionNorth() ).location() );
+		assertEquals( pointIn00(), marsroverPoint00DirectionNorth().location() );
 	}
+	
 	@Test public void test02RoverStartsAtGivenDirection() {
-		assertEquals( new DirectionNorth(), new MarsRover( new Pointer(0,0), new DirectionNorth()).direction() );
+		assertEquals( new DirectionNorth(), marsroverPoint00DirectionNorth().direction() );
 	}
 	
 	@Test public void test03RoverRemainsStillAfterEmptyCommand() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("");
-		assertEquals( new Pointer(0,0) , rover.location());	
+		assertEquals( pointIn00() , marsroverPoint00DirectionNorth().move("").location());	
 	}
 	
 	@Test public void test04RoverMoveForward() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("f");
-		assertEquals( new Pointer(0,1) , rover.location());		
+		assertEquals( new Pointer(0,1) , marsroverPoint00DirectionNorth().move("f").location());		
 	}
 	
 	@Test public void test05RoverMoveBackwards() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("b");
-		assertEquals( new Pointer(0,-1) , rover.location());
+		assertEquals( new Pointer(0,-1) , marsroverPoint00DirectionNorth().move("b").location());
 	}
 
 	@Test public void test06RoverMoveLeft() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("l");
-		assertEquals( new DirectionWest() , rover.direction());
+		assertEquals( new DirectionWest() , marsroverPoint00DirectionNorth().move("l").direction());
 	}
 	
 	@Test public void test07RoverMoveRight() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("r");
-		assertEquals( new DirectionEast() , rover.direction());
+		assertEquals( new DirectionEast() , marsroverPoint00DirectionNorth().move("r").direction());
 	}
 	
 	@Test public void test08RoverMoveForwardAndBackwardsReturnsToFirstLocation() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("fb");
-		assertEquals( new Pointer(0,0) , rover.location());
+		assertEquals( pointIn00() , marsroverPoint00DirectionNorth().move("fb").location());
 	}
 	
-	@Test public void test09RoverMoves() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		rover.move("ffbrffb");
-		assertEquals( new Pointer(1, 1) , rover.location());
+	@Test public void test09RoverMovesWithACompounCommand() {
+		assertEquals( new Pointer(1, 3) , marsroverPoint00DirectionNorth().move("fflbrffb").location());
 	}
 	
-	@Test public void test010RoverIsGivenInvalidCommand() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
-		assertEquals( Command.INVALID_COMMAND_ERROR , assertThrows( Exception.class, () -> rover.move("a")).getMessage());
+	@Test public void test10RoverIsGivenInvalidCommand() {
+		throwsLike(Command.INVALID_COMMAND_ERROR, () -> marsroverPoint00DirectionNorth().move("a"));
 	}
 	
-	@Test public void test011RoverMovesAndThenIsGivenInvalidCommand() {
-		MarsRover rover = new MarsRover( new Pointer(0,0) , new DirectionNorth() );
+	@Test public void test11RoverGivenInvalidCommandRemainsAtLastPosition() {
+		MarsRover rover = marsroverPoint00DirectionNorth();
 		assertThrows( Exception.class, () -> rover.move("ffabb"));
 		assertEquals( new Pointer(0,2), rover.location() );
+	}
+	
+	private void throwsLike(String msg, Executable executable) {
+		assertEquals( msg , assertThrows( Exception.class, executable).getMessage());
+	}
+	
+	private MarsRover marsroverPoint00DirectionNorth() {
+		return new MarsRover( pointIn00(), new DirectionNorth() );
+	}
+	
+	private Pointer pointIn00() {
+		return new Pointer(0,0);
 	}
 }
