@@ -29,7 +29,7 @@
 	<section name="ExtractMethodWizard">
 		<item key="ThrowRuntimeExceptions" value="false"/>
 		<item key="GenerateJavadoc" value="false"/>
-		<item key="AccessModifier" value="2"/>
+		<item key="AccessModifier" value="1"/>
 	</section>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
 		<item key="updateSimilarElements" value="false"/>
@@ -37,5 +37,7 @@
 		<item key="updateTextualMatches" value="false"/>
 		<item key="updateQualifiedNames" value="false"/>
 		<item key="patterns" value="*"/>
+	</section>
+	<section name="RenameInformationPopup">
 	</section>
 </section>

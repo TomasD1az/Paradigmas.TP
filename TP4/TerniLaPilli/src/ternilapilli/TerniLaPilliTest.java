@@ -45,6 +45,14 @@ class TerniLaPilliTest {
 		assertThrowsLike( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG, () -> game.putOAt( 1, 1 ));
 	}
 	
+	@Test void test09PutPieceThrowsErrorWhenLocationDoesNotExist() {
+		assertThrowsLike( Piece.INVALID_POSITION_ERROR_MSG, () -> new TerniLaPilli().putOAt( 51, 1 ));
+	}
+	
+	@Test void test10SlideDoesNotWorkBefore6PiecesOnBoard() {
+		assertThrowsLike( Piece.INVALID_POSITION_ERROR_MSG, () -> new TerniLaPilli().slideRightPieceXIn( 1, 1 ));
+	}
+	
 	@Test void test0ErrorThrownWhenTryingToPut4XPiecesInBoard() {
 		TerniLaPilli game = fullTerniLaPilliGame();
 		assertThrowsLike(TerniLaPilli.NOT_MORE_PIECES_AVAILABLE_ERROR_MSG, () -> game.putXAt( 3, 1 ));
