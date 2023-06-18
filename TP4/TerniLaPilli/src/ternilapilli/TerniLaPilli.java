@@ -7,10 +7,10 @@ import java.util.Arrays;
 public class TerniLaPilli {
 	public static String NOT_CORRECT_TURN_ERROR_MSG = "Not correct turn to play";
 	public static String NOT_MORE_PIECES_AVAILABLE_ERROR_MSG = "No more pieces available";
-	public static String LOCATION_NOT_AVAILABLE_ERROR_MSG = "Location not available for piece";
-	public static String CANNOT_SLIDE_PIECES = "Cannot slide pieces";
-	public static String CANNOT_PUT_MORE_PIECES = "Cannot put more pieces";
-	public static String ONLY_SLIDE_SORROUNDING_SQUARES = "Only slide sorrounding squares";
+	public static String LOCATION_NOT_AVAILABLE_ERROR_MSG = "Coordinates are not available or do not exist";
+	public static String CANNOT_SLIDE_PIECES_ERROR_MSG = "Cannot slide pieces";
+	public static String CANNOT_PUT_MORE_PIECES_ERROR_MSG = "Cannot put more pieces";
+	public static String ONLY_SLIDE_SORROUNDING_SQUARES_ERROR_MSG = "Only slide sorrounding squares";
 	
 	private Player turn;
 	private List<Piece> piecesX;
@@ -46,28 +46,31 @@ public class TerniLaPilli {
 	
  	public TerniLaPilli putXAt( int row, int column) {
 		assert turn.isPlayingX();
-		if (isUsedInGame( row, column ))
-			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG );
+		checkPutConditions(row, column);
 
 		return lookForState().putXAt( this, new Piece( row, column) );
 	}
  	
 	public TerniLaPilli putOAt(int row, int column) {
 		assert turn.isPlayingO();
-		if (isUsedInGame( row, column ))
-			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG );
+		checkPutConditions(row, column);
 
 		return lookForState().putOAt( this, new Piece( row, column) );
+	}
+	
+	public TerniLaPilli innerPutXAt( Piece piece ) {
+		turn = addPieceAndNextPlayer( piecesX(), piece);
+		return this;
+	}
+
+	public TerniLaPilli innerPutOAt( Piece piece ) {
+		turn = addPieceAndNextPlayer( piecesO(), piece );
+		return this;
 	}
 
 	public TerniLaPilli slidePieceXTo(int row, int column, int newRow, int newColumn) {
 		assert turn.isPlayingX();
-		if ( !(isUsedIn( piecesX(), row, column)) ) 
-			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG);
-		if (isUsedInGame( newRow, newColumn ))
-			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG );
-		if (new Piece(row,column).isFar( newRow, newColumn)) 
-			throw new RuntimeException( TerniLaPilli.ONLY_SLIDE_SORROUNDING_SQUARES);
+		checkSlidingConditions( piecesX(), row, column, newRow, newColumn );
 		
 		return lookForState().slidePieceXTo( this, new Piece (row, column), new Piece (newRow, newColumn) );
 
@@ -75,48 +78,36 @@ public class TerniLaPilli {
 
 	public TerniLaPilli slidePieceOTo(int row, int column, int newRow, int newColumn) {
 		assert turn.isPlayingO();
-		if ( !(isUsedIn( piecesO(), row, column)) ) 
-			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG);
-		if (isUsedInGame( newRow, newColumn ))
-			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG );
-		if (new Piece(row,column).isFar( newRow, newColumn)) 
-			throw new RuntimeException( TerniLaPilli.ONLY_SLIDE_SORROUNDING_SQUARES);
+		checkSlidingConditions( piecesO(), row, column, newRow, newColumn );
 
 		return lookForState().slidePieceOTo( this, new Piece (row, column), new Piece (newRow, newColumn) );
 	}
 	
-	public TerniLaPilli innerPutXAtIn( int row, int column ) {
-		turn = addPieceAndNextPlayer( piecesX(), new Piece( row, column ));
-		return this;
-	}
-
-	public TerniLaPilli innerPutOAt( int row, int column ) {
-		turn = addPieceAndNextPlayer( piecesO(), new Piece( row, column ));
-		return this;
+	public boolean isPieceUsedInX(int row, int column) {
+		return isPieceUsedIn( piecesX(), row, column);
 	}
 	
-	public Player addPieceAndNextPlayer( List<Piece> pieces, Piece piece) {
-		pieces.add( piece );
-		return turn.nextPlayer();
+	public boolean isPieceUsedInO(int row, int column) {
+		return isPieceUsedIn( piecesO(), row, column);
 	}
 	
-	public boolean isUsedIn(List<Piece> pieces, int row, int column) {
+	public boolean isPieceUsedInGame( int row, int column ) {
+		return isPieceUsedIn(allPieces(), row, column);
+	}
+	
+	public boolean isPieceUsedIn(List<Piece> pieces, int row, int column) {
 		return pieces.contains( new Piece (row, column));
 	}
 	
-	public boolean isUsedInGame( int row, int column ) {
-		return isUsedIn(allPieces(), row, column);
-	}
-	
 	public boolean isOver() {
-		return XhasWon() || OhasWon();
+		return hasXWon() || hasOWon();
 	}
 
-	public boolean OhasWon() {
+	public boolean hasOWon() {
 		return hasPlayerWon( piecesO );
 	}
 
-	public boolean XhasWon() {
+	public boolean hasXWon() {
 		return hasPlayerWon( piecesX );
 	}
 	
@@ -133,6 +124,8 @@ public class TerniLaPilli {
 	}
 
 	public boolean hasPlayerWon( List<Piece> pieces) {
+		if ( pieces.size() < 3 )
+			return false;
 		return checkColumnsIn( pieces ) || checkRows( pieces ) || checkDiagonals( pieces );
 	}
 	
@@ -140,11 +133,34 @@ public class TerniLaPilli {
 		return ( isOver() ) ? -1 : allPieces().size();
 	}
 	
-	private State lookForState() {
-		return stateArray().stream().filter( (each) -> each.canHandle(currentStateID() ) ).findFirst().get());
+	private State lookForState() {	
+		return listStates().stream().filter( (state) -> state.canHandle( currentStateID() )).findFirst().get();
+	}
+
+	private List<State> listStates() {
+		return new ArrayList<State>( Arrays.asList( new PutPieceState(), new SlidePieceState(), new GameOverState() ));
 	}
 	
-	private ArrayList<State> stateArray() {
-		return new ArrayList<>(Arrays.asList( new StatePut(), new StateSlide(), new StateOver() ) );
+	public void checkPutConditions(int row, int column) {
+		if (isPieceUsedInGame( row, column ))
+			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG );
 	}
+	
+	public void checkSlidingConditions(List<Piece> pieces, int row, int column, int newRow, int newColumn) {
+		if ( (isPieceNotIn( pieces, row, column )) || (isPieceUsedInGame( newRow, newColumn )) ) ;
+			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG);
+		
+		if (new Piece(row,column).isFar( newRow, newColumn)) 
+			throw new RuntimeException( TerniLaPilli.ONLY_SLIDE_SORROUNDING_SQUARES_ERROR_MSG);
+	}
+	
+	public Player addPieceAndNextPlayer( List<Piece> pieces, Piece piece) {
+		pieces.add( piece );
+		return turn.nextPlayer();
+	}
+	
+	private boolean isPieceNotIn( List<Piece> pieces, int row, int column ) {
+		return !(isPieceUsedIn( pieces, row, column));
+	}
+	
 }
