@@ -13,5 +13,4 @@ public class PlayerX extends Player {
 	public Player nextPlayer() {
 		return new PlayerO();
 	}
-
 }

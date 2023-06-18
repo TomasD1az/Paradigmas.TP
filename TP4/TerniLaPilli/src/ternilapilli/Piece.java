@@ -48,17 +48,15 @@ public class Piece {
 		return row() + column() == 4;
 	}
 	
+	public boolean isFar(int newRow, int newColumn) {
+		return Math.abs(row - newRow) > 1 || Math.abs(column - newColumn) > 1;
+	}
 	
-
 	private boolean rowAndColumnNotBetween1to3(int row, int column) {
 		return !(numberBetween1To3(row) && numberBetween1To3(column));
 	}
  
 	private boolean numberBetween1To3(int number) {
 		return number >= 1 && number <= 3;
-	}
-
-	public boolean isFar(int newRow, int newColumn) {
-		return Math.abs(row - newRow) > 1 || Math.abs(column - newColumn) > 1;
 	}
 }

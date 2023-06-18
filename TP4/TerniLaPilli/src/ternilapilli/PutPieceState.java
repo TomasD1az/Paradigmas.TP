@@ -21,5 +21,4 @@ public class PutPieceState extends State{
 	public TerniLaPilli slidePieceOTo(TerniLaPilli game, Piece piece, Piece newLocation) {
 		throw new RuntimeException( TerniLaPilli.CANNOT_SLIDE_PIECES_ERROR_MSG );
 	}
-
 }

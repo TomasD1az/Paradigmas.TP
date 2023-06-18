@@ -68,6 +68,18 @@ public class TerniLaPilli {
 		return this;
 	}
 
+	public TerniLaPilli innerSlideXAt( Piece piece, Piece newLocation ) {
+		piecesX.remove(piece);
+		turn = addPieceAndNextPlayer( piecesX(), newLocation);
+		return this;
+	}
+
+	public TerniLaPilli innerSlideOAt( Piece piece, Piece newLocation ) {
+		piecesO.remove(piece);
+		turn = addPieceAndNextPlayer( piecesO(), newLocation );
+		return this;
+	}
+	
 	public TerniLaPilli slidePieceXTo(int row, int column, int newRow, int newColumn) {
 		assert turn.isPlayingX();
 		checkSlidingConditions( piecesX(), row, column, newRow, newColumn );
@@ -147,7 +159,7 @@ public class TerniLaPilli {
 	}
 	
 	public void checkSlidingConditions(List<Piece> pieces, int row, int column, int newRow, int newColumn) {
-		if ( (isPieceNotIn( pieces, row, column )) || (isPieceUsedInGame( newRow, newColumn )) ) ;
+		if ( (isPieceNotIn( pieces, row, column )) || (isPieceUsedInGame( newRow, newColumn )) )
 			throw new RuntimeException( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG);
 		
 		if (new Piece(row,column).isFar( newRow, newColumn)) 
@@ -162,5 +174,4 @@ public class TerniLaPilli {
 	private boolean isPieceNotIn( List<Piece> pieces, int row, int column ) {
 		return !(isPieceUsedIn( pieces, row, column));
 	}
-	
 }

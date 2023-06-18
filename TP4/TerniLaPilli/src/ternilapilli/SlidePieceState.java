@@ -15,13 +15,10 @@ public class SlidePieceState extends State{
 	}
 
 	public TerniLaPilli slidePieceXTo(TerniLaPilli game, Piece piece, Piece newLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return game.innerSlideXAt(piece, newLocation);
 	}
 
 	public TerniLaPilli slidePieceOTo(TerniLaPilli game, Piece piece, Piece newLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		return game.innerSlideOAt(piece, newLocation);
 	}
-
 }

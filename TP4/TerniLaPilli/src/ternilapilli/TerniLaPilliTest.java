@@ -114,6 +114,23 @@ class TerniLaPilliTest {
 		assertTrue( game.isPieceUsedInO( 3, 2 ));  
 	}
 	
+	@Test void test0OCannotSlideFirst() {
+		TerniLaPilli game = fullTerniLaPilliGame();
+		assertThrowsLike(TerniLaPilli.NOT_CORRECT_TURN_ERROR_MSG, () -> game.slidePieceOTo(3,3,3,2));
+	}
+	
+	@Test void test0CanWithInSlidingState() {
+		TerniLaPilli game = fullTerniLaPilliGame();
+		game.slidePieceXTo(1, 2, 2, 3);
+		game.slidePieceOTo(3, 3, 3, 2);
+		game.slidePieceXTo(2,3,3,3);
+		assertTrue(game.hasXWon());
+	}
+	
+	@Test void test0CannotPutPiecesInGameOverState() {
+		TerniLaPilli game = gameWithXWinner();
+		assertThrowsLike( TerniLaPilli.NOT_MORE_PIECES_AVAILABLE_ERROR_MSG,() -> game.putOAt(3, 1));
+	}
 	
 	private TerniLaPilli fullTerniLaPilliGame() {
 		return new TerniLaPilli().putXAt( 1, 1 )
@@ -135,5 +152,4 @@ class TerniLaPilliTest {
 	private void assertThrowsLike(String msg, Executable executable) {
 		assertEquals( msg, assertThrows( Exception.class, executable).getMessage() );
 	}
-
 }

@@ -6,28 +6,19 @@ public class GameOverState extends State{
 		return id == -1;
 	}
 
-	@Override
 	public TerniLaPilli putXAt(TerniLaPilli game, Piece location) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException( TerniLaPilli.NOT_MORE_PIECES_AVAILABLE_ERROR_MSG );		
 	}
 
-	@Override
 	public TerniLaPilli putOAt(TerniLaPilli game, Piece location) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException( TerniLaPilli.NOT_MORE_PIECES_AVAILABLE_ERROR_MSG );
 	}
 
-	@Override
 	public TerniLaPilli slidePieceXTo(TerniLaPilli game, Piece piece, Piece newLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException( TerniLaPilli.CANNOT_SLIDE_PIECES_ERROR_MSG );
 	}
 
-	@Override
 	public TerniLaPilli slidePieceOTo(TerniLaPilli game, Piece piece, Piece newLocation) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException( TerniLaPilli.CANNOT_SLIDE_PIECES_ERROR_MSG );
 	}
-
 }
