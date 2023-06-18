@@ -67,18 +67,6 @@ public class TerniLaPilli {
 		turn = addPieceAndNextPlayer( piecesO(), piece );
 		return this;
 	}
-
-	public TerniLaPilli innerSlideXAt( Piece piece, Piece newLocation ) {
-		piecesX.remove(piece);
-		turn = addPieceAndNextPlayer( piecesX(), newLocation);
-		return this;
-	}
-
-	public TerniLaPilli innerSlideOAt( Piece piece, Piece newLocation ) {
-		piecesO.remove(piece);
-		turn = addPieceAndNextPlayer( piecesO(), newLocation );
-		return this;
-	}
 	
 	public TerniLaPilli slidePieceXTo(int row, int column, int newRow, int newColumn) {
 		assert turn.isPlayingX();
@@ -95,20 +83,14 @@ public class TerniLaPilli {
 		return lookForState().slidePieceOTo( this, new Piece (row, column), new Piece (newRow, newColumn) );
 	}
 	
-	public boolean isPieceUsedInX(int row, int column) {
-		return isPieceUsedIn( piecesX(), row, column);
+	public TerniLaPilli innerSlideXAt( Piece piece, Piece newLocation ) {
+		turn = replacePieceAndNextPlayer( piecesX(), piece, newLocation );
+		return this;
 	}
-	
-	public boolean isPieceUsedInO(int row, int column) {
-		return isPieceUsedIn( piecesO(), row, column);
-	}
-	
-	public boolean isPieceUsedInGame( int row, int column ) {
-		return isPieceUsedIn(allPieces(), row, column);
-	}
-	
-	public boolean isPieceUsedIn(List<Piece> pieces, int row, int column) {
-		return pieces.contains( new Piece (row, column));
+
+	public TerniLaPilli innerSlideOAt( Piece piece, Piece newLocation ) {
+		turn = replacePieceAndNextPlayer( piecesO(), piece, newLocation );
+		return this;
 	}
 	
 	public boolean isOver() {
@@ -171,7 +153,36 @@ public class TerniLaPilli {
 		return turn.nextPlayer();
 	}
 	
-	private boolean isPieceNotIn( List<Piece> pieces, int row, int column ) {
+	public Player replacePieceAndNextPlayer( List<Piece> pieces, Piece previousPiece, Piece newPiece) {
+		pieces.remove( previousPiece );
+		return addPieceAndNextPlayer( pieces, newPiece);
+	}
+	
+	public boolean isPieceUsedInX(int row, int column) {
+		return isPieceUsedIn( piecesX(), row, column);
+	}
+	
+	public boolean isPieceUsedInO(int row, int column) {
+		return isPieceUsedIn( piecesO(), row, column);
+	}
+	
+	public boolean isPieceUsedInGame( int row, int column ) {
+		return isPieceUsedIn(allPieces(), row, column);
+	}
+	
+	public boolean isPieceUsedIn(List<Piece> pieces, int row, int column) {
+		return pieces.contains( new Piece (row, column));
+	}
+	
+	public boolean isPieceNotIn( List<Piece> pieces, int row, int column ) {
 		return !(isPieceUsedIn( pieces, row, column));
+	}
+	
+	public boolean isPieceNotInX( int row, int column) {
+		return isPieceNotIn( piecesX(), row, column);
+	}
+	
+	public boolean isPieceNotInO( int row, int column) {
+		return isPieceNotIn( piecesO(), row, column);
 	}
 }
