@@ -57,7 +57,8 @@ public class Piece {
 	private boolean numberBetween1To3(int number) {
 		return number >= 1 && number <= 3;
 	}
-	
-	
 
+	public boolean isFar(int newRow, int newColumn) {
+		return Math.abs(row - newRow) > 1 || Math.abs(column - newColumn) > 1;
+	}
 }

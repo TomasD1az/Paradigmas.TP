@@ -27,7 +27,7 @@ class TerniLaPilliTest {
 	}
 	
 	@Test void test05ErrorThrownWhenPutOPieceFirst() {
-		assertThrowsLike(TerniLaPilli.NOT_CORRECT_TURN_ERROR_MSG, () -> new TerniLaPilli().putOAt( 1, 1 ));
+		assertThrowsLike(TerniLaPilli.NOT_CORRECT_TURN_ERROR_MSG, () -> new TerniLaPilli().putXAt( 1, 1 ));
 	}
 	
 	@Test void test06ErrorThrownWhenTryingToPlayTwoTimesWithX() {
@@ -36,21 +36,21 @@ class TerniLaPilliTest {
 	}
 	
 	@Test void test07ErrorThrownWhenTryingToPlayTwoTimesWithO() {
-		TerniLaPilli game = new TerniLaPilli().putXAt( 1, 1 ).putOAt( 2, 1 );
-		assertThrowsLike(TerniLaPilli.NOT_CORRECT_TURN_ERROR_MSG, () -> game.putOAt( 1, 2 ));
+		TerniLaPilli game = new TerniLaPilli().putXAt( 1, 1 ).putXAt( 2, 1 );
+		assertThrowsLike(TerniLaPilli.NOT_CORRECT_TURN_ERROR_MSG, () -> game.putXAt( 1, 2 ));
 	}
 	
 	@Test void test08ErrorThrownWhenTryingToPlaceAPieceOnTopOfAnother() {
 		TerniLaPilli game = new TerniLaPilli().putXAt( 1, 1 );
-		assertThrowsLike( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG, () -> game.putOAt( 1, 1 ));
+		assertThrowsLike( TerniLaPilli.LOCATION_NOT_AVAILABLE_ERROR_MSG, () -> game.putXAt( 1, 1 ));
 	}
 	
 	@Test void test09PutPieceThrowsErrorWhenLocationDoesNotExist() {
-		assertThrowsLike( Piece.INVALID_POSITION_ERROR_MSG, () -> new TerniLaPilli().putOAt( 51, 1 ));
+		assertThrowsLike( Piece.INVALID_POSITION_ERROR_MSG, () -> new TerniLaPilli().putXAt( 51, 1 ));
 	}
 	
 	@Test void test10SlideDoesNotWorkBefore6PiecesOnBoard() {
-		assertThrowsLike( Piece.INVALID_POSITION_ERROR_MSG, () -> new TerniLaPilli().slideRightPieceXIn( 1, 1 ));
+		assertThrowsLike( Piece.INVALID_POSITION_ERROR_MSG, () -> new TerniLaPilli().slidePieceXTo( 1, 1 ));
 	}
 	
 	@Test void test0ErrorThrownWhenTryingToPut4XPiecesInBoard() {
@@ -59,13 +59,13 @@ class TerniLaPilliTest {
 	}
 	
 	@Test void test0ErrorThrownWhenTryingToPut4OPiecesInBoard() {
-		TerniLaPilli game = fullTerniLaPilliGame().slideRightPieceXIn( 2, 2 );
-		assertThrowsLike(TerniLaPilli.NOT_MORE_PIECES_AVAILABLE_ERROR_MSG, () -> game.putOAt( 3, 1 ));
+		TerniLaPilli game = fullTerniLaPilliGame().slidePieceXTo( 2, 2 );
+		assertThrowsLike(TerniLaPilli.NOT_MORE_PIECES_AVAILABLE_ERROR_MSG, () -> game.putXAt( 3, 1 ));
 	}
 
 	private TerniLaPilli fullTerniLaPilliGame() {
 		return new TerniLaPilli().putXAt( 1, 1 )
-											   .putOAt( 2, 1 )
+											   .putXAt( 2, 1 )
 												.putXAt( 1, 2 )
 												 .putOAt( 1, 3 )
 												  .putXAt( 2, 2 )
